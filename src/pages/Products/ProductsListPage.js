@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { ProductCard } from "../../components/Elements/ProductCard";
 import { ProductFilterBar } from "./components/ProductFilterBar";
+import { useTitle } from '../../hooks';
 
 export const ProductsListPage = () => {
+  useTitle("Explore eBooks Collection");
   const [show, setShow] = useState(false);
   const [products, setProducts] = useState([]);
   useEffect(() => {
