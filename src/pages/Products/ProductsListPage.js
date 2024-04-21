@@ -1,16 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { ProductCard } from "../../components/Elements/ProductCard";
 import { ProductFilterBar } from "./components/ProductFilterBar";
-import { useTitle } from '../../hooks';
+import { useTitle } from "../../hooks";
 
 export const ProductsListPage = () => {
   useTitle("Explore eBooks Collection");
   const [show, setShow] = useState(false);
   const [products, setProducts] = useState([]);
+  const search = useLocation().search;
+  const searchTerm = new URLSearchParams(search).get("q");
+  console.log(searchTerm)
   useEffect(() => {
     async function fetchProducts() {
-      const response = await fetch("http://localhost:8000/products");
+      const response = await fetch(
+        `http://localhost:8000/products?name_like=${
+          searchTerm ? searchTerm : ""
+        }`
+      );
+      console.log(response)
       const data = await response.json();
+      console.log(data)
       setProducts(data);
     }
     fetchProducts();
